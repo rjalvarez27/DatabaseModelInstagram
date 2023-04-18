@@ -14,7 +14,7 @@ class User(Base):
     email = Column(String(50), nullable=False, unique=True)
     username = Column(String(50), nullable=False, unique=True)
     password = Column(String(50), nullable=False)
-
+    favorites =  relationship('favorite')
 
 class Persons(Base):
     __tablename__ = 'Persons'
@@ -24,22 +24,34 @@ class Persons(Base):
     skin_color = Column(String(80))
     height = Column(String(8))
     eye_color = Column(String(8))
+    favorites =  relationship('favorite')
 
-
-class Planets (Base):
+class Planets(Base):
     __tablename__ = 'Planets'
     id = Column(Integer, primary_key=True)
     name = Column(String(20), nullable=False)
     climate = Column(String(20))
-    population = Column(Integer(10))
+    population = Column(Integer)
     orbital_period = Column(String(8))
     rotate_period = Column(String(8))
-
-class Favorites (Base):
-    __tablename__ = 'favorites'
+    favorites =  relationship('favorite')
+    
+class Favorite(Base):
+    __tablename__ = "favorite"    
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey=True)
+    #Personaje
+    persons = relationship(Persons)
+    persons_id = Column(Integer, ForeignKey('Persons.id'), nullable=True)
+    
+    #Planeta
+    planets = relationship(Planets)
+    planets_id = Column(Integer, ForeignKey('Planets.id'), nullable = True)
+
+    #Usuario
+    user_id = Column(Integer, ForeignKey('User.id'), nullable= False)
     user = relationship(User)
+
+    
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
