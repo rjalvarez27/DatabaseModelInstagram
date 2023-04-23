@@ -53,10 +53,10 @@ class Follower(Base):
     __tablename__ = "Follower"    
     id = Column(Integer, primary_key=True)     
     #User fron id
-    user_From_id = Column(Integer, ForeignKey('User.id'), nullable= True)
+    user_From_id = Column(Integer, ForeignKey('User.id'), nullable= False)
     user = relationship(User)      
     #user to id 
-    user_to_id = Column(Integer, ForeignKey('User.id'), nullable= True)
+    user_to_id = Column(Integer, ForeignKey('User.id'), nullable= False)
     user = relationship(User)   
 
 
